@@ -1,0 +1,284 @@
+Index: .idea/gradle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/gradle.xml b/.idea/gradle.xml
+new file mode 100644
+--- /dev/null	(date 1631731755415)
++++ b/.idea/gradle.xml	(date 1631731755415)
+@@ -0,0 +1,20 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="GradleMigrationSettings" migrationVersion="1" />
++  <component name="GradleSettings">
++    <option name="linkedExternalProjectsSettings">
++      <GradleProjectSettings>
++        <option name="testRunner" value="GRADLE" />
++        <option name="distributionType" value="DEFAULT_WRAPPED" />
++        <option name="externalProjectPath" value="$PROJECT_DIR$" />
++        <option name="modules">
++          <set>
++            <option value="$PROJECT_DIR$" />
++            <option value="$PROJECT_DIR$/app" />
++          </set>
++        </option>
++        <option name="resolveModulePerSourceSet" value="false" />
++      </GradleProjectSettings>
++    </option>
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+new file mode 100644
+--- /dev/null	(date 1631701116247)
++++ b/.idea/misc.xml	(date 1631701116247)
+@@ -0,0 +1,16 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="DesignSurface">
++    <option name="filePathToZoomLevelMap">
++      <map>
++        <entry key="..\:/vijay_fa3_039/unit-3/sprint-2/day-3/we/app/src/main/res/layout/activity_main.xml" value="0.1" />
++      </map>
++    </option>
++  </component>
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
++    <output url="file://$PROJECT_DIR$/build/classes" />
++  </component>
++  <component name="ProjectType">
++    <option name="id" value="Android" />
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/.gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/.gitignore b/.idea/.gitignore
+new file mode 100644
+--- /dev/null	(date 1631699278347)
++++ b/.idea/.gitignore	(date 1631699278347)
+@@ -0,0 +1,3 @@
++# Default ignored files
++/shelf/
++/workspace.xml
+Index: ../../../sprint-3/day-3/we/app/src/main/java/com/masai/myapplication/DownloadService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../../../sprint-3/day-3/we/app/src/main/java/com/masai/myapplication/DownloadService.java b/../../../sprint-3/day-3/we/app/src/main/java/com/masai/myapplication/DownloadService.java
+new file mode 100644
+--- /dev/null	(date 1631788437508)
++++ b/../../../sprint-3/day-3/we/app/src/main/java/com/masai/myapplication/DownloadService.java	(date 1631788437508)
+@@ -0,0 +1,43 @@
++package com.masai.myapplication;
++
++import android.app.IntentService;
++import android.content.Intent;
++import android.content.Context;
++
++import java.io.File;
++
++
++public class DownloadService extends IntentService {
++
++
++    public DownloadService() {
++        super("async");
++    }
++
++
++    private void downloadFile() {
++        try {
++            File directory = new File(getFilesDir() + File.separator + "Vogella");
++            if (!directory.exists()) {
++                directory.mkdir();
++            }
++            File file = new File(directory, "vogella.html");
++            if (!file.exists()) {
++                file.mkdir();
++            }
++        }catch (Exception e){
++
++        }
++
++    }
++
++
++
++
++    @Override
++    protected void onHandleIntent(Intent intent) {
++
++
++        }
++
++}
+\ No newline at end of file
+Index: app/src/main/java/com/masai/servicessamplewe/MusicPlayerService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/masai/servicessamplewe/MusicPlayerService.java b/app/src/main/java/com/masai/servicessamplewe/MusicPlayerService.java
+new file mode 100644
+--- /dev/null	(date 1631959218612)
++++ b/app/src/main/java/com/masai/servicessamplewe/MusicPlayerService.java	(date 1631959218612)
+@@ -0,0 +1,119 @@
++package com.masai.servicessamplewe;
++
++import android.app.Notification;
++import android.app.NotificationChannel;
++import android.app.NotificationManager;
++import android.app.Service;
++import android.content.Intent;
++import android.os.Build;
++import android.os.IBinder;
++
++import androidx.annotation.Nullable;
++import androidx.core.app.NotificationCompat;
++
++import java.io.File;
++import java.io.FileDescriptor;
++import java.io.FileOutputStream;
++import java.io.OutputStream;
++import java.io.OutputStreamWriter;
++import java.util.Objects;
++
++public class MusicPlayerService extends Service {
++    private String name="";
++
++    public MusicPlayerService() {
++    }
++    private Runnable task = new Runnable() {
++        @Override
++        public void run() {
++            saveToFile();
++        }
++
++        private void saveToFile() {
++            try {
++                File directory =new File(getFilesDir()+File.separator+ "NameFolder");
++
++                if(!directory.exists()){
++                    directory.mkdir();
++                }
++
++                File file = new File(directory, "name.txt");
++                if(!file.exists()){
++                    file.createNewFile();
++                }
++                FileOutputStream fileOutputStream = new FileOutputStream(file, true);
++                OutputStreamWriter writer = new OutputStreamWriter(fileOutputStream);
++                writer.append(name +"\n");
++                writer.close();
++
++
++                Intent intent = new Intent("com.xyz.service");
++                intent.putExtra("name","Data Done");
++                sendBroadcast(intent);
++
++
++            }
++            catch (Exception e){
++
++            }
++
++
++
++        }
++    };
++
++
++    @Override
++    public void onCreate() {
++        super.onCreate();
++        showNotificationAndStartForeGround();
++    }
++
++
++    @Override
++    public int onStartCommand(Intent intent, int flags, int startId) {
++        if(intent != null){
++            name= intent.getStringExtra("name");
++        }
++        launchBackgroundThread();
++        return super.onStartCommand(intent, flags, startId);
++    }
++
++    @Nullable
++    @Override
++    public IBinder onBind(Intent intent) {
++        throw new UnsupportedOperationException("not yet implemented");
++    }
++
++    private void launchBackgroundThread(){
++        Thread thread = new Thread(task);
++        thread.start();
++    }
++
++    private void showNotificationAndStartForeGround() {
++        createChannel();
++
++        NotificationCompat.Builder notificationBuilder = null;
++        notificationBuilder = new NotificationCompat.Builder(this, "CHANNEL_ID")
++                .setContentTitle("Service is running : yaay")
++                .setContentText("name is android")
++                .setPriority(NotificationCompat.PRIORITY_HIGH);
++
++        Notification notification = null;
++        notification = notificationBuilder.build();
++        startForeground(1, notification);
++    }
++
++
++    /*
++Create noticiation channel if OS version is greater than or eqaul to Oreo
++*/
++    public void createChannel() {
++        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
++            NotificationChannel channel = new NotificationChannel("CHANNEL_ID", "Nimit", NotificationManager.IMPORTANCE_HIGH);
++            channel.setDescription("Notifications");
++            Objects.requireNonNull(this.getSystemService(NotificationManager.class)).createNotificationChannel(channel);
++        }
++    }
++
++}
+\ No newline at end of file
+Index: .idea/.name
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/.name b/.idea/.name
+new file mode 100644
+--- /dev/null	(date 1631699300854)
++++ b/.idea/.name	(date 1631699300854)
+@@ -0,0 +1,1 @@
++ServicesSampleWe
+\ No newline at end of file
+Index: .idea/compiler.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/compiler.xml b/.idea/compiler.xml
+new file mode 100644
+--- /dev/null	(date 1631699359661)
++++ b/.idea/compiler.xml	(date 1631699359661)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="CompilerConfiguration">
++    <bytecodeTargetLevel target="11" />
++  </component>
++</project>
+\ No newline at end of file
